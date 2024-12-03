@@ -1,75 +1,36 @@
-import React from "react";
-import ModalWrapper from "../partials/modals/ModalWrapper";
-import { ImagePlusIcon, X } from "lucide-react";
-import SpinnerButton from "../partials/spinners/SpinnerButton";
-import { StoreContext } from "@/components/store/storeContext";
-import { setIsAdd } from "@/components/store/storeAction";
-import { Form, Formik } from "formik";
-import { InputPhotoUpload, InputSelect, InputText } from "@/components/helpers/FormInputs";
-import * as Yup from "Yup";
-import useUploadPhoto from "@/components/custom-hook/useUploadPhoto";
-import { imgPath } from "@/components/helpers/functions-general";
+import React from 'react'
+import ModalWrapper from '../partials/modals/ModalWrapper'
+import { ImagePlusIcon, Minus, Plus, X } from 'lucide-react'
+import SpinnerButton from '../partials/spinners/SpinnerButton'
+import { InputPhotoUpload } from '@/components/helpers/FormInputs'
+import { StoreContext } from '@/components/store/storeContext'
+import { setIsAdd } from '@/components/store/storeAction'
 
-const ModalAddRecipe = ({ itemEdit }) => {
-  const { dispatch } = React.useContext(StoreContext);
-  const { uploadPhoto, handleChangePhoto, photo } = useUploadPhoto("");
+const ModalAddRecipe = () => {
+  const {dispatch} = React.useContext(StoreContext);
 
-  const handleClose = () => {
-    dispatch(setIsAdd(false));
-  };
-
-  const initVal = {
-    menu_title : itemEdit ? itemEdit.menu_title : "",
-    menu_price : itemEdit ? itemEdit.menu_price : "",
-    menu_category : itemEdit ? itemEdit.menu_category : "",
-
-    
-  }
-
-  const yupSchema = Yup.object ({
-    menu_title : Yup.string().required("Required"),
-    menu_price : Yup.string().required("Required"),
-    menu_category : Yup.string().required("Required"),
-    
-  });
+  const handeClose = () => dispatch(setIsAdd(false));
 
   return (
-    <>
-      <ModalWrapper>
-        <div className="main-side absolute top-0 right-0 bg-primary h-[100dvh] w-[300px] border-l border-line">
-          <div className="modal-header p-4 flex justify-between items-center">
-            <h5 className="mb-0 leading-none">Add Foods</h5>
-            <button onClick={handleClose}>
+    <ModalWrapper>
+        <div className="modal-main bg-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-[1300px] w-full rounded-md border border-line">
+          <div className="modeal-header flex gap-2 p-2 items-center border-b border-line mb-2">
+            <span className="text-body">Add Recipe</span>
+            <button className="ml-auto" onClick={handeClose}>
               <X />
             </button>
           </div>
+          <div className="modal-body p-4">
+           <form action="">
+             <div className='grid grid-cols-[1fr,_1.5fr,_1.5fr] gap-3'>
 
-
-          <Formik
-        initialValues={initVal}
-        validationSchema={yupSchema}
-        onSubmit={async (values) => {
-          console.log(values)
-        }}
-      >
-        {(props) => {
-          return (
-            <Form>
-
-          <div className="modal-form  h-full max-h-[calc(100vh-56px)] grid grid-rows-[1fr_auto]">
-            <div className="form-wrapper p-4 max-h-[85vh] h-full overflow-y-auto custom-scroll ">
-            
-            <div className="input-wrap">
-                <InputText 
-                label="Title"
-                type="text"
-                name="food_title"
-                />
-              </div>
-             
-              <div className="input-wrap relative  group input-photo-wrap mb-8 h-[150px]">
-              <label htmlFor="">Photo</label>
-                {itemEdit === null ? (
+             <div className='info'>
+                <h3 className='mb-0'>Information</h3>
+               <div className="input-wrap relative  group input-photo-wrap mb-8 h-[150px]">
+              <label htmlFor="">
+                Photo
+              </label>
+                {true ? (
                   <div className="w-full border border-line rounded-md flex justify-center items-center flex-col h-full">
                     <ImagePlusIcon
                       size={50}
@@ -82,17 +43,17 @@ const ModalAddRecipe = ({ itemEdit }) => {
                   </div>
                 ) : (
                   <img
-                    src={
-                      itemEdit === null
-                        ? URL.createObjectURL(photo) // preview
-                        : imgPath + "/" + itemEdit?.menu_image // check db
-                    }
+                    // src={
+                    //   itemEdit === null
+                    //     ? URL.createObjectURL(photo) // preview
+                    //     : imgPath + "/" + itemEdit?.menu_image // check db
+                    // }
                     alt="employee photo"
                     className={`group-hover:opacity-30 duration-200 relative object-cover h-full w-full  m-auto `}
                   />
                 )}
 
-                       <InputPhotoUpload
+                       {/* <InputPhotoUpload
                           name="photo"
                           type="file"
                           id="photo"
@@ -101,58 +62,123 @@ const ModalAddRecipe = ({ itemEdit }) => {
                           onChange={(e) => handleChangePhoto(e)}
                           onDrop={(e) => handleChangePhoto(e)}
                           className={`opacity-0 absolute top-0 right-0 bottom-0 left-0 rounded-full  m-auto cursor-pointer w-full h-full`}
-                        />
+                        /> */}
+                </div>
+             
+
+             <div className='input-wrap'>
+              <label htmlFor="">Title</label>
+              <input type="text" />
+             </div>
+
+              <div className='input-wrap'>
+               <label htmlFor="">Category</label>
+               <select name="" id="">
+                <option value="" hidden>
+                  Select Category
+                </option>
+                <option value="chicken">Chicken</option>
+                <option value="beef">Beef</option>
+                <option value="pasta">Pasta</option>
+               </select>
               </div>
 
-             
-              <div className="input-wrap">
-              <InputText
-                label="Price"
-                type="text"
-                name="menu_price"
-                />
+              <div className='input-wrap'>
+                <label htmlFor="">Serving</label>
+                <input type="text" />
               </div>
-              <div className="input-wrap">
+
+              <div className='input-wrap'>
+                <label htmlFor="">Prep Time</label>
+                <input type="text" />
+              </div>
+
+              <div className='input-wrap'>
                 <label htmlFor="">Category</label>
-                <InputSelect label="Category" name="movie_category">
-                  <option value="" hidden>
-                    Select Category
-                  </option>
-                  <option value="value meal">Value Meal</option>
-                  <option value="chicken joy">Chicken Joy</option>
-                  <option value="burger">Burger</option>
-                  <option value="spaghetti">Spaghetti</option>
-                  <option value="burger steak">Burger Steak</option>
-                  <option value="palabok">Palabok</option>
-                  <option value="sides">Sides</option>
-                  <option value="desserts">Desserts</option>
-                  </InputSelect>
+               <select name="" id="">
+                <option value="" hidden>
+                  Select Level
+                </option>
+                <option value="easy">Easy</option>
+                <option value="moderate">Moderate</option>
+                <option value="difficult">Difficult</option>
+               </select>
               </div>
+               </div>
              
-              
-              
-              
-       
-            </div>
-            <div className="form-action flex p-4 justify-end gap-3">
-              <button className="btn btn-info bg-myred" type="submit">
-                <SpinnerButton />
-                Save
+             <div className='ingredients'>
+             <div className='input-wrap overflow-y-auto custom-scroll max-h-[655px] h-full'>
+              <div className='flex justify-between items-center'>
+                <h3 className='mb-0'>Ingredients</h3>
+               <button className='bg-accent py-1 px-2 text-sm rounded-md '>
+                Add
+               </button>
+              </div>
+
+              <div className='overflow-y-auto custom-scroll max-h-[500px] h-full pr-2'>
+              {Array.from(Array(10).keys()).map((i) => (
+                 <div className='grid grid-cols-[1fr,_.3fr,_.8fr,_.2fr] gap-3 mt-2'>
+                 <div>
+                 <label htmlFor="">Ingredients</label>
+                 <input type="text" />
+                </div>
+ 
+                <div>
+                 <label htmlFor="">Amount</label>
+                 <input type="text" />
+                </div>
+ 
+               
+              <div>
+               <label htmlFor="">Unit</label>
+               <select name="" id="">
+                 <option value="">tsb</option>
+                 <option value="">tsp</option>
+                 <option value="">cup</option>
+                 <option value="">oz</option>
+               </select>
+              </div>
+
+                <button className='size-[33px] bg-accent text-white rounded-md center-all self-end'>
+               <Minus />
               </button>
-              <button className="btn btn-cancel" onClick={handleClose} type="reset">
+              
+              </div> 
+              ))}
+              </div>
+              </div> 
+              </div>
+
+             <div className='instruction'>
+             <h3>Description</h3>
+              <textarea className='overflow-y-auto custom-scroll p-2 max-h-[120px] outline-none h-full w-full rounded-md
+              bg-primary text-body border border-line resize-none'></textarea>
+            
+
+              <h3>Instructions</h3>
+              <textarea className='overflow-y-auto custom-scroll p-2 max-h-[300px] outline-none h-full w-full rounded-md
+              bg-primary text-body border border-line resize-none'></textarea>
+             </div>
+             
+
+                      
+              
+
+           </div>
+           </form>
+            <div className="flex justify-end gap-3 mt-5">
+              <button className="btn btn-alert">
+                <SpinnerButton />
+                Add
+              </button>
+              <button className="btn btn-cancel" onClick={handeClose}>
                 Cancel
               </button>
             </div>
           </div>
-          </Form>
-          );
-        }}
-      </Formik>
-
         </div>
-      </ModalWrapper>
-    </>
-  );
-};
+    </ModalWrapper>
+  )
+}
 
-export default ModalAddRecipe;
+export default ModalAddRecipe

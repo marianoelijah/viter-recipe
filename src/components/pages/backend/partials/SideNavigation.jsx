@@ -20,7 +20,7 @@ const SideNavigation = ({ menu }) => {
     <>
       <aside className="p-4 border-r border-line">
         <img
-          src={`${imgPath}/jollibee-logo.webp`}
+          src={`${imgPath}/logo-recipe.png`}
           alt=""
           className="w-80%] mx-auto mt-2"
         />
