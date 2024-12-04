@@ -151,41 +151,49 @@ class Recipe
     }
 
     
-   // update
-   public function update()
-   {
-       try {
-           $sql = "update {$this->tblrecipe} set ";
-           $sql .= "recipe_title = :recipe_title, ";
-           $sql .= "recipe_category = :recipe_category, ";
-           $sql .= "recipe_level = :recipe_level, ";
-           $sql .= "recipe_serving = :recipe_serving, ";
-           $sql .= "recipe_prep_time = :recipe_prep_time, ";
-           $sql .= "recipe_image = :recipe_image, ";
-           $sql .= "recipe_ingredients = :recipe_ingredients, ";
-           $sql .= "recipe_description = :recipe_description, ";
-           $sql .= "recipe_instruction = :recipe_instruction, ";
-           $sql .= "recipe_datetime = :recipe_datetime ";
-           $sql .= "where recipe_aid = :recipe_aid ";
-           $query = $this->connection->prepare($sql);
-           $query->execute([
-               "recipe_title" => $this->recipe_title,
-               "recipe_category" => $this->recipe_category,
-               "recipe_level" => $this->recipe_level,
-               "recipe_serving" => $this->recipe_serving,
-               "recipe_prep_time" => $this->recipe_prep_time,
-               "recipe_image" => $this->recipe_image,
-               "recipe_ingredients" => $this->recipe_ingredients,
-               "recipe_description" => $this->recipe_description,
-               "recipe_instruction" => $this->recipe_instruction,
-               "recipe_datetime" => $this->recipe_datetime,
-               "recipe_aid" => $this->recipe_aid,
-           ]);
-       } catch (PDOException $ex) {
-           $query = false;
-       }
-       return $query;
-   }
+  
+
+    // update
+    public function update()
+    {
+        try {
+            $sql = "update {$this->tblrecipe} set ";
+            $sql .= "recipe_title = :recipe_title, ";
+            $sql .= "recipe_category = :recipe_category, ";
+            $sql .= "recipe_level = :recipe_level, ";
+            $sql .= "recipe_serving = :recipe_serving, ";
+            $sql .= "recipe_prep_time = :recipe_prep_time, ";
+            $sql .= "recipe_image = :recipe_image, ";
+            $sql .= "recipe_ingredients = :recipe_ingredients, ";
+            $sql .= "recipe_description = :recipe_description, ";
+            $sql .= "recipe_instruction = :recipe_instruction, ";
+            $sql .= "recipe_datetime = :recipe_datetime ";
+            $sql .= "where recipe_aid = :recipe_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "recipe_title" => $this->recipe_title,
+                "recipe_category" => $this->recipe_category,
+                "recipe_level" => $this->recipe_level,
+                "recipe_serving" => $this->recipe_serving,
+                "recipe_prep_time" => $this->recipe_prep_time,
+                "recipe_image" => $this->recipe_image,
+                "recipe_ingredients" => $this->recipe_ingredients,
+                "recipe_description" => $this->recipe_description,
+                "recipe_instruction" => $this->recipe_instruction,
+                "recipe_datetime" => $this->recipe_datetime,
+                "recipe_aid" => $this->recipe_aid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+
+
+
+
+
 
     // active
     public function active()

@@ -3,70 +3,101 @@ import Headings from '../Headings'
 import Footnote from '../Footnote'
 import { imgPath } from '@/components/helpers/functions-general'
 import { Clock, Dot, HandPlatter, Utensils } from 'lucide-react'
+import Markdown from 'react-markdown'
+import { useParams } from 'react-router-dom'
+import useQueryData from '@/components/custom-hook/useQueryData'
 
 const Single = () => {
-  return (
+  const { slug } = useParams();
+
+  const {
+    isLoading,
+    isFetching,
+    error,
+    data: result,
+  } = useQueryData(
+    `/v2/recipe`, // endpoint
+    "get", // method
+    "recipe"
+  );
+
+  const getSingleRecipe = () => 
+    result?.data.filter( 
+      (item) => item.recipe_title === slug.replaceAll("-", " ")
+    );
+
+    return (
     <>
        <Headings />
        <section className='bg-dark text-white'>
            <div className='container'>
-             <div className=''>
-              <img src={`${imgPath}/banner-pasta.webp`} 
+             <div className='py-25'>
+              <img 
+              src={`${imgPath}/${
+                getSingleRecipe() !== undefined &&
+                getSingleRecipe()[0].recipe_image}`}
               alt="" 
               className='h-[500px] w-full object-cover'
               />
 
               <div className='text-center py-10'>
-                  <h1>Chicken Adobo</h1>
+                  <h1>
+                     {getSingleRecipe() !== undefined &&
+                      getSingleRecipe().recipe_title}
+                  </h1>
+
                     <ul className='flex gap-5 mb-5 justify-center'>
                         <li className='flex gap-2 items-center'> 
-                            <Clock/> 30mins 
+                            <Clock/> {" "}
+                            {getSingleRecipe() !== undefined &&
+                             getSingleRecipe().recipe_prep_time}
+                             mins
                         </li>
     
                         <li className='flex gap-2 items-center'> 
-                            <Utensils/> 4servings
+                            <Utensils/> {" "}
+                            {getSingleRecipe() !== undefined &&
+                             getSingleRecipe().recipe_serving} {" "}
+                             servings
                         </li>
     
                         <li className='flex gap-2 items-center'> 
-                            <HandPlatter/> Chicken
+                            <HandPlatter/> {" "}
+                            {getSingleRecipe() !== undefined &&
+                             getSingleRecipe().recipe_category} {" "}
                         </li>
                     </ul>
                       <p className='max-w-[600px] mx-auto'>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Praesentium, quidem labore! Amet officiis qui velit!
+                      {getSingleRecipe() !== undefined &&
+                      getSingleRecipe().recipe_description}
                       </p>
 
                       <div className="grid grid-cols-[1.5fr_3fr] gap-10 max-w-[900px] mx-auto mt-10 text-left">
                         <div>
                             <h4>Ingredients</h4>
-                            {Array.from(Array(8).keys()).map((key) => (
-                              <div className="flex gap-2">
-                              <Dot />
-                              <ul
-                                className="grid grid-cols-[.3fr,_1fr] mb-2 basis-full"
-                                key={key}
-                              >
-                                <li>
-                                  <span>1</span> Cup
-                                </li>
-                                <li>Sugar</li>
-                              </ul>
-                            </div>
-                            ))}
-                            
+                            {getSingleRecipe() !== undefined &&
+                      JSON.parse(getSingleRecipe()[0].recipe_ingredients).map(
+                      (item, key) => (
+                        <div className="flex gap-2" key={key}>
+                          <Dot />
+                          <ul className="grid grid-cols-[.6fr,_1fr] mb-2 basis-full">
+                            <li>
+                              <span>{item.amount}</span> {item.unit}
+                            </li>
+                            <li>{item.ingredients}</li>
+                          </ul>
+                        </div>
+                      )
+                    )}
                         </div>
 
                         <div className='wrapper-instruction'>
                             <h4>Instructions</h4>
-
-                            <h5>Step 1 - Clean the chicken</h5>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, soluta.</p>
-
-                            <h5>Step 2 - Clean the chicken</h5>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, soluta.</p>
-
-                            <h5>Step 3 - Clean the chicken</h5>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, soluta.</p>
+                            <Markdown>
+                              {getSingleRecipe() !== undefined &&
+                              getSingleRecipe().recipe_instructons}
+                            </Markdown>
+                            
                         </div>
                     </div>
                 </div>
