@@ -11,9 +11,9 @@ const Headings = () => {
          <img 
          src={`${imgPath}/recipe-logo.png`} 
          alt="" 
-         className='w-[90px] py-2'
+         className='w-[60px] py-2 lg:h-[5rem]'
         />
-         <nav>
+         <nav className="hidden lg:block">
             <ul className='flex items-center gap-5 text-white py-5 '>
                 <li>
                     <NavLink>About</NavLink>
@@ -40,5 +40,5 @@ const Headings = () => {
   )
 }
 
-export default Headings
+export default Headings;
 

@@ -13,10 +13,10 @@ const Single = () => {
              <div className=''>
               <img src={`${imgPath}/banner-pasta.webp`} 
               alt="" 
-              className='h-[500px] w-full object-cover'
+              className='h-[500px] w-full object-cover mb-5'
               />
 
-              <div className='text-center py-10'>
+              <div className='text-center py-10 mb-2'>
                   <h1>Chicken Adobo</h1>
                     <ul className='flex gap-5 mb-5 justify-center'>
                         <li className='flex gap-2 items-center'> 

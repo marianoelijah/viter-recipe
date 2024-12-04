@@ -70,7 +70,7 @@
 
 @layer components {
     .container {
-      @apply max-w-[1200px] mx-auto px-4 w-full;
+      @apply max-w-[1200px] mx-auto px-4 w-full lg:px-0 lg:py-0 py-2;
     }
     .btn {
       @apply p-1.5 py-2 border border-transparent flex gap-2 rounded-md transition-all items-center bg-primary text-sm;

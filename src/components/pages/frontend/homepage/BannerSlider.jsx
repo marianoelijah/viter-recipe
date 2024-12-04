@@ -26,9 +26,11 @@ const BannerSlider = () => {
                  />
     
                  <div className='tint  w-full h-[110%] bg-black absolute top-0 left-0 bg-opacity-40'></div>
-                   <div className='absolute top-1/2  left-[calc((100%-1200px)/2)] p-4 text-white max-w-[500px]
+                   <div className='absolute top-1/2  md:left-[calc((100%-1200px)/2)] p-4 text-white max-w-[500px] md:max-w-[500px]
                    -translate-y-1/2'>
-                     <h2 className='text-5xl '>Freshly Baked Carbonara</h2>
+                     <h2 className='text-5xl '>
+                      Freshly Baked Carbonara
+                    </h2>
                       <ul className='flex gap-5 mb-5'>
                         <li className='flex gap-2 items-center'> 
                             <Clock/> 30mins 
