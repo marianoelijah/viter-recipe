@@ -13,12 +13,12 @@ const Single = () => {
              <div className=''>
               <img src={`${imgPath}/banner-pasta.webp`} 
               alt="" 
-              className='h-[500px] w-full object-cover mb-5'
+              className='h-[500px] md:h-[500px] w-full object-cover mb-5'
               />
 
-              <div className='text-center py-10 mb-2'>
-                  <h1>Chicken Adobo</h1>
-                    <ul className='flex gap-5 mb-5 justify-center'>
+              <div className='text-center py-10  md:py-10 mb-2'>
+                  <h1  className="md:text-4xl">Chicken Adobo</h1>
+                    <ul className='flex md:gap-5 gap-5 mb-5 justify-center'>
                         <li className='flex gap-2 items-center'> 
                             <Clock/> 30mins 
                         </li>
@@ -36,9 +36,9 @@ const Single = () => {
                         Praesentium, quidem labore! Amet officiis qui velit!
                       </p>
 
-                      <div className="grid grid-cols-[1.5fr_3fr] gap-10 max-w-[900px] mx-auto mt-10 text-left">
+                      <div className="grid md:grid-cols-[1.5fr_3fr] md:gap-10 gap-10 max-w-[900px] mx-auto mt-10 text-left">
                         <div>
-                            <h4>Ingredients</h4>
+                            <h4 className="text-lg md:text-xl">Ingredients</h4>
                             {Array.from(Array(8).keys()).map((key) => (
                               <div className="flex gap-2">
                               <Dot />
@@ -57,7 +57,7 @@ const Single = () => {
                         </div>
 
                         <div className='wrapper-instruction'>
-                            <h4>Instructions</h4>
+                            <h4 className="text-lg md:text-xl">Instructions</h4>
 
                             <h5>Step 1 - Clean the chicken</h5>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, soluta.</p>

@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom'
 
 const TopRating = () => {
   return (
-    <section className='py-24 bg-dark -translate-y-2'>
+    <section className='py-24 md:py-24 bg-dark -translate-y-2'>
       <div className='container'>
-        <h2 className='text-white'>
+        <h2 className='text-white md:text-4xl '>
             Top Rated Recipes
         </h2>
 
-        <div className="grid grid-container-top gap-3">
+        <div className="grid grid-container-top gap-3 md:grid-cols-3">
         {Array.from(Array(6).keys()).map((key) => (
           <div className={`grid-items relative h-full w-full bg-black group grid-name-${key} overflow-hidden`}
           key={key}
@@ -18,7 +18,7 @@ const TopRating = () => {
            <img 
            src={`${imgPath}/banner-pasta.webp`} 
            alt="" 
-           className='object-cover h-full transition-all group-hover:opacity-70 group-hover:scale-[1.5] group-hover:rotate-[10deg]'
+           className='object-cover h-full md:h-64 transition-all group-hover:opacity-70 group-hover:scale-[1.5] group-hover:rotate-[10deg]'
            />
               <div className='absolute -bottom-24 left-5 text-white opacity-0 group-hover:bottom-5 group-hover:opacity-100 transition-all'>
                 <ul className='text-sm flex gap-4 items-center'>
