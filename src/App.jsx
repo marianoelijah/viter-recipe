@@ -13,7 +13,7 @@ const App = () => {
         <Routes>
           <Route path="/admin/recipe" element={<Recipe />} />
           <Route path="/admin/homepage" element={<Homepage />} />
-          <Route path="/recipe/single" element={<Single />} />
+          <Route path="/recipe/single/:slug" element={<Single />} />
         </Routes>
       </Router>
     </StoreProvider>
