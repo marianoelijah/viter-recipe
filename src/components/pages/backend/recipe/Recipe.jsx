@@ -6,13 +6,10 @@ import Footer from '../partials/Footer'
 import SearchBar from '../partials/SearchBar'
 import { StoreContext } from '@/components/store/storeContext'
 import ToastSuccess from '../partials/ToastSuccess'
-import ModalError from '../partials/modals/ModalError'
-import ModalValidation from '../partials/modals/ModalValidation'
 import { setIsAdd } from '@/components/store/storeAction'
 import ModalAddRecipe from './ModalAddRecipe'
 import RecipeTable from './RecipeTable'
-
-
+import ModalError from '@/components/partials/modal/ModalError'
 
 const Recipe = () => {
   const { dispatch, store } = React.useContext(StoreContext);
@@ -31,7 +28,8 @@ const Recipe = () => {
             <div className="p-8">
               <div className="flex justify-between items-center ">
                 <SearchBar />
-                <button className="btn btn-add" onClick={handleAdd}>
+                <button className="btn btn-add" 
+                onClick={handleAdd}>
                   <Plus size={16} />
                   Add New
                 </button>

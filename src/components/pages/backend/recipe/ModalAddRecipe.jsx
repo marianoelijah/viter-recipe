@@ -1,7 +1,7 @@
 import React from "react";
-import ModalWrapper from "../partials/modals/ModalWrapper";
-import { ImagePlusIcon, Minus, Plus, X } from "lucide-react";
+// import ModalWrapper from "../partials/Modals/ModalWrapper";
 import SpinnerButton from "../partials/spinners/SpinnerButton";
+import { ImagePlusIcon, Minus, Plus, X } from "lucide-react";
 import {
   InputPhotoUpload,
   InputSelect,
@@ -9,27 +9,22 @@ import {
   InputTextArea,
 } from "@/components/helpers/FormInputs";
 import { StoreContext } from "@/components/store/storeContext";
-import {
-  setIsAdd,
-  setMessage,
-  setSuccess,
-  setValidate,
-} from "@/components/store/storeAction";
+import { setIsAdd } from "@/components/store/storeAction";
 import { Field, FieldArray, Form, Formik } from "formik";
-import * as Yup from "yup";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import * as Yup from "Yup";
 import { queryData } from "@/components/helpers/queryData";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useUploadPhoto from "@/components/custom-hook/useUploadPhoto";
 import { imgPath } from "@/components/helpers/functions-general";
+
 const ModalAddRecipe = ({ itemEdit }) => {
   const { dispatch } = React.useContext(StoreContext);
-  const queryClient = useQueryClient();
-
+  const handleClose = () => dispatch(setIsAdd(false));
 
   const { uploadPhoto, handleChangePhoto, photo } =
     useUploadPhoto("/v2/upload-photo");
 
-
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (values) =>
       queryData(
@@ -39,13 +34,14 @@ const ModalAddRecipe = ({ itemEdit }) => {
       ),
     onSuccess: (data) => {
       // Invalidate and refetch
+      console.log(data);
       queryClient.invalidateQueries({
         queryKey: ["recipe"],
       });
 
-
       // show error box
       if (data.success) {
+        console.log("asd");
         dispatch(setIsAdd(false));
         dispatch(setSuccess(true));
       } else {
@@ -54,11 +50,6 @@ const ModalAddRecipe = ({ itemEdit }) => {
       }
     },
   });
-
-
-  const handleClose = () => dispatch(setIsAdd(false));
-
-
 
   const initVal = {
     recipe_title: itemEdit ? itemEdit.recipe_title : "",
@@ -69,9 +60,7 @@ const ModalAddRecipe = ({ itemEdit }) => {
     recipe_description: itemEdit ? itemEdit.recipe_description : "",
     recipe_instruction: itemEdit ? itemEdit.recipe_instruction : "",
 
-
     recipe_title_old: itemEdit ? itemEdit.recipe_title : "",
-
 
     recipe_ingredients: itemEdit
       ? JSON.parse(itemEdit.recipe_ingredients)
@@ -87,17 +76,16 @@ const ModalAddRecipe = ({ itemEdit }) => {
     recipe_instruction: Yup.string().required("required"),
   });
 
-
   return (
     <ModalWrapper>
       <div className="modal-main bg-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-[1300px] w-full rounded-md border border-line">
-        <div className="modal-header flex gap-2 p-2 items-center border-b border-line mb-2 ">
+        <div className="modal-header flex gap-2 p-2 items-center border-b border-line mb-2">
           <span className="text-body">Add Recipe</span>
           <button className="ml-auto" onClick={handleClose}>
             <X />
           </button>
         </div>
-        <div className="modal-body p-4 ">
+        <div className="modal-body p-2 py-4">
           <Formik
             initialValues={initVal}
             validationSchema={yupSchema}
@@ -118,7 +106,7 @@ const ModalAddRecipe = ({ itemEdit }) => {
             {(props) => {
               return (
                 <Form>
-                  <div className="grid grid-cols-[1fr,_1.5fr,_1.5fr] gap-5">
+                  <div className="grid grid-cols-[1fr_1.5fr_1.5fr] gap-5">
                     <div className="info">
                       <h3 className="mb-0">Information</h3>
                       <div className="input-wrap relative  group input-photo-wrap h-[150px] ">
@@ -140,7 +128,7 @@ const ModalAddRecipe = ({ itemEdit }) => {
                                 ? URL.createObjectURL(photo) // preview
                                 : imgPath + "/" + itemEdit?.recipe_image // check db
                             }
-                            alt="Recipe photo"
+                            alt="recipe photo"
                             className={`group-hover:opacity-30 duration-200 relative object-cover h-full w-full  m-auto ${
                               mutation.isPending
                                 ? "opacity-40 pointer-events-none"
@@ -148,7 +136,6 @@ const ModalAddRecipe = ({ itemEdit }) => {
                             }`}
                           />
                         )}
-
 
                         <InputPhotoUpload
                           name="photo"
@@ -163,23 +150,22 @@ const ModalAddRecipe = ({ itemEdit }) => {
                           }`}
                         />
                       </div>
+
                       <div className="input-wrap">
                         <InputText
                           label="Title"
-                          type="text"
                           name="recipe_title"
+                          type="text"
                         />
                       </div>
-
-
                       <div className="input-wrap">
                         <InputSelect label="Category" name="recipe_category">
                           <option value="" hidden>
                             Select Category
                           </option>
-                          <option value="chicken">Chicken</option>
-                          <option value="beef">Beef</option>
-                          <option value="pasta">Pasta</option>
+                          <option value="Chicken">Chicken</option>
+                          <option value="Pasta">Pasta</option>
+                          <option value="Beef">Beef</option>
                         </InputSelect>
                       </div>
                       <div className="input-wrap">
@@ -187,31 +173,26 @@ const ModalAddRecipe = ({ itemEdit }) => {
                           <option value="" hidden>
                             Select Level
                           </option>
-                          <option value="easy">Easy</option>
-                          <option value="moderate">Moderate</option>
-                          <option value="difficult">Difficult</option>
+                          <option value="Easy">Easy</option>
+                          <option value="Moderate">Moderate</option>
+                          <option value="Difficult">Difficult</option>
                         </InputSelect>
                       </div>
-
-
                       <div className="input-wrap">
                         <InputText
                           label="Serving"
-                          type="text"
                           name="recipe_serving"
+                          type="text"
                         />
                       </div>
-
-
                       <div className="input-wrap">
                         <InputText
                           label="Prep Time"
-                          type="text"
                           name="recipe_prep_time"
+                          type="text"
                         />
                       </div>
                     </div>
-
 
                     <div className="ingredient">
                       <FieldArray
@@ -221,8 +202,7 @@ const ModalAddRecipe = ({ itemEdit }) => {
                             <div className="flex justify-between items-center">
                               <h3 className="mb-0">Ingredients</h3>
                               <button
-                                className="bg-alert  p-1 px-2 text-sm rounded-md"
-                                type="button"
+                                className="bg-accent text-[#652427] font-semibold  p-1 px-2 text-sm rounded-md"
                                 onClick={() =>
                                   push({
                                     ingredients: "",
@@ -230,26 +210,25 @@ const ModalAddRecipe = ({ itemEdit }) => {
                                     unit: "",
                                   })
                                 }
+                                type="button"
                               >
                                 Add
                               </button>
                             </div>
 
-
                             <div className="overflow-y-auto custom-scroll max-h-[500px] h-full pr-2">
                               {props.values.recipe_ingredients.map(
                                 (ingredients, index) => (
                                   <div
-                                    className="grid grid-cols-[1fr,_.3fr,_.8fr_.2fr] gap-3 mt-3"
+                                    className="grid grid-cols-[1fr,_.3fr,_.8fr_.2fr] gap-3 mt-3 "
                                     key={index}
                                   >
                                     <div>
-                                      <label htmlFor="">ingredients</label>
+                                      <label htmlFor="">Ingredients</label>
                                       <Field
                                         name={`recipe_ingredients[${index}].ingredients`}
                                       />
                                     </div>
-
 
                                     <div>
                                       <label htmlFor="">Amount</label>
@@ -258,14 +237,12 @@ const ModalAddRecipe = ({ itemEdit }) => {
                                       />
                                     </div>
 
-
                                     <div>
                                       <label htmlFor="">Unit</label>
                                       <Field
                                         name={`recipe_ingredients[${index}].unit`}
                                       />
                                     </div>
-
 
                                     <button
                                       className="size-[33px] bg-accent text-white rounded-md center-all self-end"
@@ -280,39 +257,34 @@ const ModalAddRecipe = ({ itemEdit }) => {
                           </div>
                         )}
                       />
-                    </div> 
-
+                    </div>
 
                     <div className="instruction">
                       <div className="input-wrap">
-                        <h3>Description</h3>
+                        <h3>Instruction</h3>
                         <InputTextArea
-                          label="Description"
-                          name="recipe_description"
-                          className="overflow-y-auto custom-scroll p-2 !h-[120px] outline-none  w-full rounded-md bg-primary text-body border border-line resize-none mb-5"
+                          name="recipe_instruction"
+                          className="overflow-y-auto custom-scroll !h-[310px] w-full rounded-md p-2 outline-none bg-primary border borderline resize-none text-body"
                         />
                       </div>
                       <div className="input-wrap">
-                        <h3>Instruction</h3>
+                        <h3>Description</h3>
                         <InputTextArea
-                          label="Instruction"
-                          name="recipe_instruction"
-                          className="overflow-y-auto custom-scroll p-2 !h-[300px]  outline-none  w-full rounded-md bg-primary text-body border border-line resize-none"
+                          name="recipe_description"
+                          className="overflow-y-auto custom-scroll !max-h-[120px] h-full w-full rounded-md p-2 outline-none bg-primary border borderline resize-none text-body"
                         />
                       </div>
                     </div>
                   </div>
 
-
                   <div className="flex justify-end gap-3 mt-5">
                     <button className="btn btn-accent" type="submit">
-                      {mutation.isPending && <SpinnerButton />}
-                      {itemEdit ? "Save" : "Add"}
+                      {mutation.isPending && <SpinnerButton />} {itemEdit ? "Save" : "Add"}
                     </button>
                     <button
                       className="btn btn-cancel"
-                      onClick={handleClose}
                       type="reset"
+                      onClick={handleClose}
                     >
                       Cancel
                     </button>
@@ -327,10 +299,4 @@ const ModalAddRecipe = ({ itemEdit }) => {
   );
 };
 
-
 export default ModalAddRecipe;
-
-
-
-
-

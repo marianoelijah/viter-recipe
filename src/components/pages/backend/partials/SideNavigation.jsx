@@ -1,5 +1,5 @@
 import { imgPath } from "@/components/helpers/functions-general";
-import { Clapperboard, LayoutDashboard, Megaphone, Star, UtensilsCrossed } from "lucide-react";
+import { ChartColumnStacked, Clapperboard, LayoutDashboard, Megaphone, Star, UtensilsCrossed } from "lucide-react";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -14,6 +14,11 @@ const SideNavigation = ({ menu }) => {
       title: "Recipe",
       slug: "/admin/recipe",
       icon: <UtensilsCrossed size={16}/>,
+    },
+    {
+      title: "Category",
+      slug: "/admin/category",
+      icon: <ChartColumnStacked size={20} />,
     },
   ];
   return (

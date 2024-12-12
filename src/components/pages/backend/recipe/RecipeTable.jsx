@@ -7,11 +7,12 @@ import { StoreContext } from "@/components/store/storeContext";
 import { Archive, ArchiveRestore, FilePenLine, Trash2 } from "lucide-react";
 import React from "react";
 import LoadMore from "../partials/LoadMore";
-import ModalConfirm from "../partials/modals/ModalConfirm";
-import ModalDelete from "../partials/modals/ModalDelete";
+
 import Pills from "../partials/Pills";
 import useQueryData from "../../../custom-hook/useQueryData";
 import SpinnerTable from "../partials/spinners/SpinnerTable";
+import Status from "@/components/partials/Status";
+import ModalDelete from "../partials/modal/ModalDelete";
 
 
 const RecipeTable = ({ setItemEdit }) => {
@@ -68,7 +69,7 @@ const RecipeTable = ({ setItemEdit }) => {
                 <th className="w-[50px]">Title</th>
                 <th>Category</th>
                 <th>Level</th>
-                <th></th>
+                
               </tr>
             </thead>
             <tbody>
@@ -89,13 +90,16 @@ const RecipeTable = ({ setItemEdit }) => {
                   <tr key={key}>
                     <td>{counter++}.</td>
                     <td>
-                      <Pills isActive={item.recipe_is_active} />
+                    {item.recipe_is_active === 1 ? (
+                        <Status text="Active" />
+                      ) : (
+                        <Status text="Inactive" />
+                      )}
                     </td>
-                    <td>{item.recipe_title}</td>
+                    <td className="capitalize">{item.recipe_title}</td>
                     <td className="capitalize">{item.recipe_category}</td>
                     <td className="capitalize">{item.recipe_level}</td>
-
-
+                    
                     <td>
                       <ul className="table-action">
                         {item.recipe_is_active ? (
@@ -156,7 +160,11 @@ const RecipeTable = ({ setItemEdit }) => {
 
 
       {store.isDelete && (
-        <ModalDelete mysqlApiDelete={`/v2/recipe/${id}`} queryKey="recipe" />
+        <ModalDelete 
+        mysqlApiDelete={`/v2/recipe/${id}`}
+        queryKey="recipe"
+        active={isActive}
+        />
       )}
 
 
