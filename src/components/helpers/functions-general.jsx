@@ -1,5 +1,5 @@
+export const imgPath = "http://localhost/viter-recipe/public/img"
 export const projectURL = "http://localhost/viter-recipe";
-export const imgPath = "http://localhost/viter-recipe/public/img";
 
 export const devApiUrl = `${projectURL}/rest`;
 export const devBaseUrl = `${projectURL}`;
@@ -21,3 +21,7 @@ export const devKey =
       });
     return data;
   };
+  
+  
+  
+  

@@ -1,24 +1,21 @@
-import { imgPath } from "@/components/helpers/functions-general";
-import React from "react";
-import { NavLink } from "react-router-dom";
-import Headings from "../Headings";
-import BannerSlider from "./BannerSlider";
-import LatestRecipe from "./LatestRecipe";
-import Footnote from "../Footnote";
-import TopRating from "./TopRating";
-import useQueryData from "@/components/custom-hook/useQueryData";
+import useQueryData from '@/components/custom-hook/useQueryData';
+import Footnote from '../Footnote';
+import Headings from '../Headings';
+import BannerSlider from './BannerSlider';
+import LatestRecipe from './LatestRecipe';
+import TopRating from './TopRating';
 
 const Homepage = () => {
-  const {
-    isLoading,
-    isFetching,
-    error,
-    data: result,
-  } = useQueryData(
-    `/v2/recipe`, // endpoint
-    "get", // method
-    "recipe"
-  );
+   const {
+     isLoading,
+     isFetching,
+     error,
+     data: result,
+   } = useQueryData(
+     `/v2/recipe`, // endpoint
+     "get", // method
+     "recipe"
+   );
   return (
     <>
       <Headings />
@@ -28,6 +25,6 @@ const Homepage = () => {
       <Footnote />
     </>
   );
-};
+}
 
-export default Homepage;
+export default Homepage

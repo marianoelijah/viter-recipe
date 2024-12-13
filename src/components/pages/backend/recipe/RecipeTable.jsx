@@ -1,24 +1,28 @@
-import { Archive, ArchiveRestore, FilePenLine, Trash2 } from "lucide-react";
-import React from "react";
-import Pills from "../partials/Pills";
-import IconServerError from "../partials/IconServerError";
-import LoadMore from "../partials/LoadMore";
-import SpinnerTable from "../partials/spinners/SpinnerTable";
-import TableLoader from "../partials/TableLoader";
-import IconNoData from "../partials/IconNoData";
-import { StoreContext } from "@/components/store/storeContext";
 import {
   setIsAdd,
+  setIsArchive,
   setIsConfirm,
   setIsDelete,
+  setIsRestore,
 } from "@/components/store/storeAction";
+import { StoreContext } from "@/components/store/storeContext";
+import { Archive, ArchiveRestore, FilePenLine, Trash2 } from "lucide-react";
+import React from "react";
+import LoadMore from "../partials/LoadMore";
+import ModalConfirm from "../partials/modals/ModalRestore";
 import ModalDelete from "../partials/modals/ModalDelete";
-import ModalConfirm from "../partials/modals/ModalConfirm";
+import Pills from "../partials/Pills";
 import useQueryData from "@/components/custom-hook/useQueryData";
+import TableLoader from "../partials/TableLoader";
+import IconNoData from "../partials/IconNoData";
+import IconServerError from "../partials/IconServerError";
+import SpinnerTable from "../partials/spinners/SpinnerTable";
+import ModalArchive from "@/components/partials/modal/ModalArchive";
+import ModalRestore from "@/components/partials/modal/ModalRestore";
 
 const RecipeTable = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [isActive, setISActive] = React.useState(0);
+  const [isActive, setIsActive] = React.useState(0);
   const [id, setId] = React.useState(null);
 
   const {
@@ -33,27 +37,29 @@ const RecipeTable = ({ setItemEdit }) => {
   );
 
   let counter = 1;
-  const handleEdit = (item) => {
-    dispatch(setIsAdd(true));
-    setItemEdit(item);
-  };
+
   const handleDelete = (item) => {
     dispatch(setIsDelete(true));
     setId(item.recipe_aid);
   };
   const handleRestore = (item) => {
     dispatch(setIsConfirm(true));
-    setISActive(1);
+    setIsActive(1);
     setId(item.recipe_aid);
   };
   const handleArchive = (item) => {
     dispatch(setIsConfirm(true));
-    setISActive(0);
+    setIsActive(0);
     setId(item.recipe_aid);
   };
+  const handleEdit = (item) => {
+    dispatch(setIsAdd(true));
+    setItemEdit(item);
+  };
+
   return (
     <>
-      <div className="p-4 bg-secondary mt-10 rounded-md border border-line relative">
+      <div className="mt-10 bg-secondary rounded-md p-4 border border-line relative">
         {!isLoading || (isFetching && <SpinnerTable />)}{" "}
         <div className="table-wrapper custom-scroll">
           <table>
@@ -61,35 +67,35 @@ const RecipeTable = ({ setItemEdit }) => {
               <tr>
                 <th>#</th>
                 <th>Status</th>
-                <th className="w-[50%]">Title</th>
-                <th className="">Category</th>
-                <th className="">Level</th>
-
+                <th>Title</th>
+                <th>Category</th>
+                <th>Level</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {((isLoading && !isFetching) || result?.data.length === 0) && (
-                <tr>
-                  <td colSpan="100%">
-                    {isLoading ? (
-                      <TableLoader count={30} cols={6} />
-                    ) : (
-                      <IconNoData />
-                    )}
-                  </td>
-                </tr>
-              )}
+              {/* {((isLoading && !isFetching) || result?.data.length === 0) && (
+                                <tr>
+                                  <td colSpan="100%">
+                                    {isLoading ? (
+                                      <TableLoader count={30} cols={6} />
+                                    ) : (
+                                      <IconNoData />
+                                    )}
+                                  </td>
+                                </tr>
+                              )}
+                           
+                           {error && (
+                                <tr>
+                                  <td colSpan="100%">
+                                    <IconServerError />
+                                  </td>
+                                </tr>
+                              )} */}
 
-              {error && (
-                <tr>
-                  <td colSpan="100%">
-                    <IconServerError />
-                  </td>
-                </tr>
-              )}
-              {result?.data.map((item, key) => {
-                return (
+              {result?.count > 0 &&
+                result.data.map((item, key) => (
                   <tr key={key}>
                     <td>{counter++}</td>
                     <td>
@@ -98,9 +104,8 @@ const RecipeTable = ({ setItemEdit }) => {
                     <td>{item.recipe_title}</td>
                     <td className="capitalize">{item.recipe_category}</td>
                     <td className="capitalize">{item.recipe_level}</td>
-
                     <td>
-                      <ul className="table-action">
+                      <ul className="table-action ">
                         {item.recipe_is_active ? (
                           <>
                             <li>
@@ -147,23 +152,29 @@ const RecipeTable = ({ setItemEdit }) => {
                       </ul>
                     </td>
                   </tr>
-                );
-              })}
+                ))}
             </tbody>
           </table>
-
           <LoadMore />
         </div>
       </div>
 
       {store.isDelete && (
-        <ModalDelete mysqlApiDelete={`/v2/recipe/${id}`} queryKey="recipe" />
+        <ModalDelete mysqlApiDelete={`/v2/recipe/${id}`} queryKey={"recipe"} />
       )}
-      {store.isConfirm && (
-        <ModalConfirm
-          queryKey="recipe"
-          mysqlApiArchive={`/v2/recipe/active/${id}`}
-          active={isActive}
+      {store.isArchive && (
+        <ModalArchive
+          setIsArchive={setIsArchive}
+          mysqlEndpoint={`/v2/recipe/active/${id}`}
+          queryKey={"recipe"}
+        />
+      )}
+
+      {store.isRestore && (
+        <ModalRestore
+          setIsRestore={setIsRestore}
+          mysqlEndpoint={`/v2/recipe/active/${id}`}
+          queryKey={"recipe"}
         />
       )}
     </>

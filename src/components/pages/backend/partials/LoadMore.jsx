@@ -1,16 +1,17 @@
-import { StoreContext } from "@/components/store/storeContext";
-import React from "react";
+import { StoreContext } from '@/components/store/storeContext'
+import React from 'react'
 
 const LoadMore = () => {
+  const {store} = React.useContext(StoreContext);
   return (
     <>
-      <div className="text-center py-2 mt-5">
-        <button className="text-body hover:text-accent transition-all">
-          Load More
-        </button>
-      </div>
+    <div className="text-center py-2 mt-5">
+    <button className="text-body hover:text-accent transition-all">
+      Load More
+    </button>
+    </div>
     </>
-  );
-};
+  )
+}
 
-export default LoadMore;
+export default LoadMore

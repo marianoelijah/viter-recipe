@@ -6,39 +6,22 @@ import { NavLink } from 'react-router-dom'
 const Headings = () => {
   return (
     <header className='bg-dark py-1'>
-      <div className='container'>
-        <div className="flex justify-between item-center">
-         <img 
-         src={`${imgPath}/recipe-logo.png`} 
-         alt="" 
-         className='w-[60px] py-2 lg:h-[5rem]'
-        />
-         <nav className="hidden lg:block">
-            <ul className='flex items-center gap-5 text-white py-5 '>
-                <li>
-                    <NavLink>About</NavLink>
-                </li>
-                <li>
-                    <NavLink>Delivery</NavLink>
-                </li>
-                <li>
-                    <NavLink>Location</NavLink>
-                </li>
-                <li>
-                    <NavLink>Contact</NavLink>
-                </li>
-            </ul>
-         </nav>
-
-          <button>
-            <Search stroke={"#fff"} />
-          </button>
+        <div className="container">
+            <div className="flex justify-between items-center">
+                <img src={`${imgPath}/logo.png`} alt="" className='max-w-[90px]'/>
+                <nav>
+                    <ul className='flex items-center gap-5 text-white'>
+                        <li><NavLink>About</NavLink></li>
+                        <li><NavLink>Delivery</NavLink></li>
+                        <li><NavLink>Location</NavLink></li>
+                        <li><NavLink>Contact</NavLink></li>
+                    </ul>
+                </nav>
+                <button><Search stroke='#fff'/></button>
+            </div>
         </div>
-      </div>
-       
     </header>
   )
 }
 
-export default Headings;
-
+export default Headings
