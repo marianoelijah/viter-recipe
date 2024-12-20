@@ -8,10 +8,9 @@ import { StoreContext } from "@/components/store/storeContext";
 import { setIsAdd } from "@/components/store/storeAction";
 import ToastSuccess from "../partials/ToastSuccess";
 import ModalError from "../partials/modals/ModalError";
-import ModalValidation from "../partials/modals/ModalSuccess";
+import ModalValidation from "../partials/modals/ModalValidation";
 import ModalAddLevel from "./ModalAddLevel";
 import LevelTable from "./LevelTable";
-import SpinnerWindow from "../partials/spinners/SpinnerWindow";
 
 const Level = () => {
   const { dispatch, store } = React.useContext(StoreContext);
@@ -34,7 +33,7 @@ const Level = () => {
             <Header title="Level" subtitle="Manage Kiosk Level" />
             <div className="p-8">
               <div className="flex justify-between items-center">
-                <SearchBar />
+               <div></div>
                 <button className="btn btn-add" onClick={handleAdd}>
                   <Plus size={16} /> Add New
                 </button>

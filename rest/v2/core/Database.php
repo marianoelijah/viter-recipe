@@ -14,7 +14,7 @@ class Database
 
         // Localhost
         $host = "localhost";
-        $dbname = "recipe_v1";
+        $dbname = "recipe_v2";
         $username = "root";
         $password = "";
 

@@ -7,6 +7,7 @@ import Single from './components/pages/frontend/single/Single'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Category from './components/pages/backend/Category/Category'
 import Level from './components/pages/backend/Level/Level'
+import Dashboard from './components/pages/backend/Dashboard/Dashboard'
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -18,6 +19,7 @@ const App = () => {
           <Route index element={<HomePage/>}/>
           <Route path='/recipe/single/:slug' element={<Single/>}/>
           <Route path='/admin/food' element={<Recipe/>}/>
+          <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path='/admin/category' element={<Category/>}/>
           <Route path='/admin/level' element={<Level/>}/>
         </Routes>

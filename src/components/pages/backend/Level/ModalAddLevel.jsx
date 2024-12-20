@@ -1,7 +1,7 @@
 import React from "react";
-import ModalWrapper from "../partials/modals/ModalSideWrapper";
+import ModalWrapper from "../partials/modals/ModalWrapper";
 import { ImagePlusIcon, X } from "lucide-react";
-import SpinnerButton from "../partials/spinner/FetchingSpinner";
+import SpinnerButton from "../partials/spinners/SpinnerButton";
 import { StoreContext } from "@/components/store/storeContext";
 import {
   setError,
