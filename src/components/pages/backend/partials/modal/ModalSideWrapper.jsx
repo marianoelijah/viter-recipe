@@ -1,5 +1,6 @@
-import { setIsAdd, setIsCompanyInfoEdit, setIsShow } from "@/store/storeAction";
-import { StoreContext } from "@/store/storeContext";
+import { setIsAdd } from "@/components/store/storeAction";
+import { StoreContext } from "@/components/store/storeContext";
+
 import React from "react";
 
 const ModalSideWrapper = (props) => {

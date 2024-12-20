@@ -1,13 +1,13 @@
-
-import { setError } from "@/components/store/storeAction";
-import { StoreContext } from "@/components/store/storeContext";
+import { GetFocus } from "@/components/helpers/functions-general";
+import { setError } from "@/store/storeAction";
+import { StoreContext } from "@/store/storeContext";
 import React from "react";
 const ModalError = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [animate, setAnimate] = React.useState("-translate-y-60");
   GetFocus("btnClose");
 
-  const handleClose  = () => {
+  const handleClose = () => {
     setAnimate("-translate-y-60");
     setTimeout(() => {
       dispatch(setError(false));
@@ -70,4 +70,8 @@ const ModalError = () => {
   );
 };
 
+<<<<<<< HEAD
 export default ModalError;
+=======
+export default ModalError;
+>>>>>>> 2f67ab56d1ec6e4a7f5db4e8d4e4f763da8f0e3d

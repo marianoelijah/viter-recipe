@@ -1,8 +1,18 @@
 import { queryData } from "@/components/helpers/queryData";
+<<<<<<< HEAD
 import { StoreContext } from "@/components/store/storeContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { FaArchive } from "react-icons/fa";
+=======
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React from "react";
+import ButtonSpinner from "../spinner/ButtonSpinner";
+import { StoreContext } from "@/components/store/storeContext";
+import { FaArchive } from "react-icons/fa";
+import { GrFormClose } from "react-icons/gr";
+
+>>>>>>> 2f67ab56d1ec6e4a7f5db4e8d4e4f763da8f0e3d
 
 const ModalArchive = ({ setIsArchive, mysqlEndpoint, queryKey, item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -46,7 +56,13 @@ const ModalArchive = ({ setIsArchive, mysqlEndpoint, queryKey, item }) => {
           <h2 className="translate-y-2">
             <FaArchive size={30} className="" />
           </h2>
+<<<<<<< HEAD
           <button onClick={handleClose}></button>
+=======
+          <button onClick={handleClose}>
+            <GrFormClose size={25} />
+          </button>
+>>>>>>> 2f67ab56d1ec6e4a7f5db4e8d4e4f763da8f0e3d
         </div>
         <div className="p-4 text-center">
           <h3 className="text-sm">Are you sure you want to archive {item}?</h3>
@@ -55,7 +71,11 @@ const ModalArchive = ({ setIsArchive, mysqlEndpoint, queryKey, item }) => {
               className="inline-block rounded-md w-full px-5 py-2 bg-[#9f1659] text-white"
               onClick={handleYes}
             >
+<<<<<<< HEAD
               Confirm
+=======
+              {mutation.isPending ? <ButtonSpinner /> : "Yes"}
+>>>>>>> 2f67ab56d1ec6e4a7f5db4e8d4e4f763da8f0e3d
             </button>
             <button
               className="inline-block rounded-md w-full px-5 py-2 bg-gray-200 text-gray-800"

@@ -1,11 +1,19 @@
 import { queryData } from "@/components/helpers/queryData";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
+<<<<<<< HEAD
 import { FaTrashRestore } from "react-icons/fa";
 import { GrFormClose } from "react-icons/gr";
 import ButtonSpinner from "../spinner/ButtonSpinner";
 import { setIsRestore } from "@/components/store/storeAction";
 import { StoreContext } from "@/components/store/storeContext";
+=======
+import ButtonSpinner from "../spinner/ButtonSpinner";
+import { StoreContext } from "@/components/store/storeContext";
+import { setIsRestore } from "@/components/store/storeAction";
+import { FaTrashRestore } from "react-icons/fa";
+import { GrFormClose } from "react-icons/gr";
+>>>>>>> 2f67ab56d1ec6e4a7f5db4e8d4e4f763da8f0e3d
 
 const ModalRestore = ({ setIsArchive, mysqlEndpoint, queryKey, item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -75,4 +83,8 @@ const ModalRestore = ({ setIsArchive, mysqlEndpoint, queryKey, item }) => {
   );
 };
 
+<<<<<<< HEAD
 export default ModalRestore;
+=======
+export default ModalRestore;
+>>>>>>> 2f67ab56d1ec6e4a7f5db4e8d4e4f763da8f0e3d

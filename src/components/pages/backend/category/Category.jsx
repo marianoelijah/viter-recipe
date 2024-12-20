@@ -1,17 +1,16 @@
-import { setIsAdd } from "@/components/store/storeAction";
-import { StoreContext } from "@/components/store/storeContext";
 import { Plus } from "lucide-react";
 import React from "react";
-import Footer from "../partials/Footer";
-import Header from "../partials/Header";
-// import ModalValidation from "../../../partials/modals/ModalValidation";
-import SearchBar from "../partials/SearchBar";
 import SideNavigation from "../partials/SideNavigation";
+import Header from "../partials/Header";
+import SearchBar from "../partials/Searchbar";
+import Footer from "../partials/Footer";
+import { StoreContext } from "@/components/store/storeContext";
+import { setIsAdd } from "@/components/store/storeAction";
 import ToastSuccess from "../partials/ToastSuccess";
-import CategoryTable from "./CategoryTable";
+import ModalError from "../partials/modals/ModalError";
+import ModalValidation from "../partials/modals/ModalValidation";
 import ModalAddCategory from "./ModalAddCategory";
-import ModalError from "../partials/modal/ModalError";
-
+import CategoryTable from "./CategoryTable";
 
 const Category = () => {
   const { dispatch, store } = React.useContext(StoreContext);
@@ -22,20 +21,21 @@ const Category = () => {
     setIsCategoryEdit(null);
   };
 
+  // const handleAdd = () => {
+  //   dispatch(setIsAdd(true));
+  // }
   return (
     <>
       <section className="layout-main">
         <div className="layout-division">
-          <SideNavigation menu="category" submenu="read" />
+          <SideNavigation menu="category" />
           <main>
-            <Header title="Category" subtitle="Manage Category" />
+            <Header title="Category" subtitle="Manage Kiosk Category" />
             <div className="p-8">
-              <div className="flex justify-between items-center ">
-                <SearchBar />
-
+              <div className="flex justify-between items-center">
+                <div></div>
                 <button className="btn btn-add" onClick={handleAdd}>
-                  <Plus size={16} />
-                  Add New
+                  <Plus size={16} /> Add New
                 </button>
               </div>
               <CategoryTable
@@ -47,12 +47,10 @@ const Category = () => {
           </main>
         </div>
       </section>
-
       {store.validate && <ModalValidation />}
-      {/* {store.error && <ModalError />} */}
+      {store.error && <ModalError />}
       {store.success && <ToastSuccess />}
-      {/* <SpinnerWindow /> */}
-
+      {/* <SpinnerWindow/> */}
       {store.isAdd && (
         <ModalAddCategory
           isCategoryEdit={isCategoryEdit}

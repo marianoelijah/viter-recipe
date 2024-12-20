@@ -1,12 +1,20 @@
+<<<<<<< HEAD
 export const projectURL = "http://localhost/viter-recipe";
 export const imgPath = "http://localhost/viter-recipe/public/img";
 
+=======
+export const imgPath = "http://localhost/viter-recipe/public/img"
+export const projectURL = "http://localhost/viter-recipe";
+>>>>>>> 2f67ab56d1ec6e4a7f5db4e8d4e4f763da8f0e3d
 
 export const devApiUrl = `${projectURL}/rest`;
 export const devBaseUrl = `${projectURL}`;
 export const devBaseImgUrl = `${imgPath}`;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2f67ab56d1ec6e4a7f5db4e8d4e4f763da8f0e3d
 export const ver = "v1";
 export const devKey =
   "$2a$12$47wDvbLInZif/PVS8B6P3.7WxyJvUpBzZAWCsnWJUKq3nrn4qgmeO";

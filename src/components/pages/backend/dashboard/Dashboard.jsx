@@ -1,11 +1,52 @@
-import { BarChart } from "lucide-react";
+import useQueryData from "@/components/custom-hook/useQueryData";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Legend,
+  Rectangle,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import Footer from "../partials/Footer";
 import Header from "../partials/Header";
+import IconNoData from "../partials/IconNoData";
 import SideNavigation from "../partials/SideNavigation";
+import FetchingSpinner from "../partials/spinners/FetchingSpinner";
+import TableLoader from "../partials/TableLoader";
 import DashboardAccordion from "./DashboardAccordion";
 import DashboardCard from "./DashboardCard";
+import { getCategoryPrices } from "./function";
 
 const Dashboard = () => {
+  const {
+    isFetching: isFetchingCategory,
+    isLoading: isLoadingCategory,
+    error: errorCategory,
+    data: resultCategory,
+  } = useQueryData(
+    `/v2/category`, // endpoint
+    "get", // method
+    "category" // key
+  );
+
+  const {
+    isFetching: isFetchingRecipe,
+    isLoading: isLoadingRecipe,
+    error: errorRecipe,
+    data: resultRecipe,
+  } = useQueryData(
+    `/v2/recipe`, // endpoint
+    "get", // method
+    "recipe" // key
+  );
+
+  const tableData = getCategoryPrices(resultCategory, resultRecipe);
+
+  console.log(tableData);
+
   return (
     <>
       <section className="layout-main">
@@ -13,50 +54,89 @@ const Dashboard = () => {
           <SideNavigation menu="dashboard" />
           <main>
             <Header title="Dashboard" subtitle="Welcome to Jollibee!" />
-            <div className="px-4">
+            <div className="p-5 overflow-y-auto custom-scroll">
               <div className="grid grid-cols-[1fr_400px] gap-5">
                 <div className="stats">
-                  <div className="grid grid-cols-4 gap-5">
-                    <DashboardCard title="Chickenjoy" filterby="Chickenjoy" />
-                    <DashboardCard title="Value Meal" filterby="Value Meal" />
-                    <DashboardCard title="Yum Burger" filterby="Yum Burger" />
-                    <DashboardCard
-                      title="Burger Steak"
-                      filterby="Burger Steak"
-                    />
-                    <DashboardCard title="Spaghetti" filterby="Spaghetti" />
-                    <DashboardCard title="Palabok" filterby="Palabok" />
-                    <DashboardCard title="Sides" filterby="Sides" />
-                    <DashboardCard title="Desserts" filterby="Desserts" />
+                  <div className="relative chart pb-16 min-h-[30rem]">
+                    {(isFetchingCategory || isFetchingRecipe) &&
+                      !isLoadingCategory &&
+                      !isLoadingRecipe && <FetchingSpinner />}
+                    {isLoadingCategory || isLoadingRecipe ? (
+                      <TableLoader col={1} count={15} />
+                    ) : (
+                      <>
+                        <ResponsiveContainer width={1200} height={300}>
+                          <h3>Menu Prices</h3>
+                          <BarChart
+                            width={1200}
+                            height={250}
+                            // data={menus.slice(0, 10)}
+                            data={tableData}
+                            margin={{
+                              top: 10,
+                              right: 30,
+                              left: 20,
+                              bottom: 5,
+                            }}
+                          >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="category_title" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Bar
+                              dataKey="menu_price"
+                              fill="#8884d8"
+                              activeBar={
+                                <Rectangle fill="pink" stroke="blue" />
+                              }
+                            />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </>
+                    )}
                   </div>
+                  <div className="relative">
+                    {isFetchingCategory && !isLoadingCategory && (
+                      <FetchingSpinner />
+                    )}
 
-                  <div className="chart mt-10">
-                    <h3>Menu Prices</h3>
-                    <BarChart
-                      width={1200}
-                      height={400}
-                      // data={menus.slice(0, 4)}
-                      margin={{
-                        top: 10,
-                        right: 30,
-                        left: 20,
-                        bottom: 5,
-                      }}
-                    >
-                      
-                    </BarChart>
+                    <div className="grid grid-cols-4 gap-5 mt-20">
+                      {isLoadingCategory && <TableLoader cols={4} count={20} />}
+                      {resultCategory?.count === 0 && <IconNoData />}
+                      {resultCategory?.count > 0 &&
+                        resultCategory?.data.map((item, key) => {
+                          return (
+                            <DashboardCard
+                              key={key}
+                              item={item}
+                              resultRecipe={resultRecipe}
+                            />
+                          );
+                        })}
+                    </div>
                   </div>
                 </div>
 
-                <aside className="sidebar custom-scroll h-[calc(100vh-200px)] overflow-auto">
-                  <DashboardAccordion title="Chicken joy" filterby="Chickenjoy" />
-                  <DashboardAccordion title="Value Meal" filterby="Valuemeal" />
-                  <DashboardAccordion title="Burger" filterby="Burger" />
-                  <DashboardAccordion title="Spaghetti" filterby="Spaghetti" />
-                  <DashboardAccordion title="Palabok" filterby="Palabok" />
-                  <DashboardAccordion title="Sides" filterby="Sides" />
-                  <DashboardCard title="Desserts" filterby="Desserts" />
-                </aside>
+                <div className=" relative sidebar custom-scroll h-[calc(100vh-150px)] overflow-auto">
+                  {isLoadingCategory && <TableLoader cols={4} count={20} />}
+                  {resultCategory?.count === 0 && <IconNoData />}
+                  {resultCategory?.count > 0 &&
+                    resultCategory?.data.map((item, key) => {
+                      const foodItems = resultRecipe?.data.filter(
+                        (foodItems) =>
+                          foodItems.food_category_id == item.category_aid
+                      );
+                      return (
+                        <DashboardAccordion
+                          key={key}
+                          item={item}
+                          title={item.category_title}
+                          foodItems={foodItems}
+                        />
+                      );
+                    })}
+                </div>
               </div>
             </div>
             <Footer />

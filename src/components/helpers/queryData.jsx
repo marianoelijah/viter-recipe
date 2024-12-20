@@ -1,5 +1,9 @@
 import { devApiUrl, devKey } from "./functions-general";
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2f67ab56d1ec6e4a7f5db4e8d4e4f763da8f0e3d
 export const queryData = (endpoint, method = "get", fd = {}) => {
   let url = devApiUrl + endpoint;
   let username = devKey;
@@ -9,11 +13,19 @@ export const queryData = (endpoint, method = "get", fd = {}) => {
   myHeaders.append("Authorization", "Basic " + auth);
   myHeaders.append("Content-Type", "application/json");
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2f67ab56d1ec6e4a7f5db4e8d4e4f763da8f0e3d
   let options = {
     method,
     headers: myHeaders,
   };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2f67ab56d1ec6e4a7f5db4e8d4e4f763da8f0e3d
   if (method !== "get") {
     options = {
       ...options,
@@ -21,6 +33,10 @@ export const queryData = (endpoint, method = "get", fd = {}) => {
     };
   }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2f67ab56d1ec6e4a7f5db4e8d4e4f763da8f0e3d
   const data = fetch(url, options).then((res) => res.json());
   return data;
 };

@@ -1,5 +1,6 @@
+// import { GetFocus } from "@/components/helpers/functions-general";
+// import { setError } from "@/store/storeAction";
 
-import { setError } from "@/components/store/storeAction";
 import { StoreContext } from "@/components/store/storeContext";
 import React from "react";
 const ModalError = () => {
@@ -7,7 +8,7 @@ const ModalError = () => {
   const [animate, setAnimate] = React.useState("-translate-y-60");
   GetFocus("btnClose");
 
-  const handleClose  = () => {
+  const handleClose = () => {
     setAnimate("-translate-y-60");
     setTimeout(() => {
       dispatch(setError(false));
